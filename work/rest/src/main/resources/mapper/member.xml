@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carutil.rest.mapper.MemberMapper">
+
+  <!--
+    namespace 는 단순히 이름 공간 역활만 하는 것은 아니다.
+    namespace 에 지정된 것이 사용할 interface 이다.
+    namespace 에 명시된 추상 method 들로 아래의 query 들이 지정된다.
+   -->
+
+  <select id="login" resultType="com.carutil.rest.vo.MemVO" 
+                     parameterType="java.util.Map" >
+    SELECT * 
+    FROM `carutil`.`member`
+    WHERE m_id = #{m_id} AND m_pw = #{m_pw}
+  </select>
+
+</mapper>
