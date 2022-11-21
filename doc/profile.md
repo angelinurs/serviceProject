@@ -88,7 +88,10 @@
 ---
 ##### # 3. Database 및 table scheme 구성
 > __1. database__
->> - imcamper
+>> - carutil
+```sql
+CREATE DATABASE `carutil`;
+```
 
 > __2. 회원정보 table__
 >> - **member**
