@@ -1,4 +1,4 @@
-#### # final project : car util
+#### # final project : car util ( 세차하기 좋은 날 )
 > ==Description==
 > 날씨 정보를 기반으로 세차 하기 좋은 날 추천
 > - 기타. 자동차 관련 정보 제공 ( dash board 기능 )
@@ -52,6 +52,9 @@
 | 건강보험심사평가원 병원약국찾기 정보 |  |  |
 | ==**식품 의약품 안전**== |
 | 식품의약품안전처_의약품 낱알식별 정보 |  |  |
+| 환경부 국립환경과학원_먹는샘물 수질검사결과 정보 |  |  |
+| ==**기타**== |
+| 전국미용업소표준데이터 |  |  |
 
 ---
 
@@ -84,6 +87,7 @@
 > 10. 기타 생활 정보 ( dashboard :: 무료와이파이 정보, cctv 정보, 공중 화장실 정보 )
 > 11. 국토교통부_CCTV 화상자료 원하는 위치
 > == 1~8 번 까지는 기간내에 구현하기
+> 12. 날씨 알려주면서 지역 광고 해주기( 날씨가 좋네요, ** 미용실 어때요?, 비가 온데요. ** 카페 어때요? )
 
 ---
 ##### # 3. Database 및 table scheme 구성
@@ -171,9 +175,23 @@ CREATE TABLE `carutil`.`comment` (
 
 ---
 ##### # 4. 화면구성
+> 1. 현재 접속 한 ip 를 기반으로 세차장 위치 보여주기 ( 지도 api )
+>> % carousel(캐러셀) UI
+>>    - carousel 모바일 swipe (옆으로 쓸기) 이벤트. 
+>>    - http://lazcreative.com/blog/adding-swipe-support-to-bootstrap-carousel-3-0/
+> 2. 차량 등록 위치로 세차장 위치 보여주기 ( 지도 api )
+>> 일반 ui ( car list )
+>> - 세차장 주변 주차장 ( map 에 같이 표시 해주면 좋을 듯 )
+> 3. 주정차금지(지정)구역 ( map 에 같이 표시 해주면 좋을 듯 )
+> 4. 교통 법규 관련 공지글.
+> 5. 자동차 보험 관련 
+> 6. 썰 관련 올리기 게시판
+> 7. 회원 가입 및 로그인 로그아웃
+> 8. 기타 생활 정보 ( dashboard :: 무료와이파이 정보, cctv 정보, 공중 화장실 정보 )
+> 9. 국토교통부_CCTV 화상자료 원하는 위치
 
 ---
-##### # 5. 캠핑장 api 분석해보고 사용가능한 api 더 알아보기
+##### # 5. carutil api 분석해보고 사용가능한 api 더 알아보기
 
 ---
 ##### # 6. spring server 구성하기
@@ -191,7 +209,7 @@ CREATE TABLE `carutil`.`comment` (
 > - Dependencies
 >   - Developer Tools :: *Spring Boot Dev Tools, Lombok, Spring configuration processor, Spring Web*
 >   - SQL :: *JDBC API, MyBatis Framework, MySQL Driver*
-
+>   - tomcat version 9.0 ( aws 에서 8.5 지원 문제 있음. )
 ---
 ##### # 7. openjdk 11 구성
 > - site : https://openjdk.org/projects/jdk/11/
