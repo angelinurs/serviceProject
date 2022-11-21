@@ -200,11 +200,11 @@ CREATE TABLE `carutil`.`comment` (
 > - Language : Java
 > - Spring Boot : ==2.7.5==
 > - Project Metadata
->   - Group : com.imcamper
+>   - Group : com.carutil
 >   - Artifact : rest
 >   - Name : rest
->   - Description : imcamper project for Spring Boot ( rest api server )
->   - Package name : com.imcamper.rest
+>   - Description : carutil project for Spring Boot ( rest api server )
+>   - Package name : com.carutil.rest
 >   - java : ==11==
 > - Dependencies
 >   - Developer Tools :: *Spring Boot Dev Tools, Lombok, Spring configuration processor, Spring Web*

@@ -1,4 +1,4 @@
-package com.imcamper.rest;
+package com.carutil.rest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

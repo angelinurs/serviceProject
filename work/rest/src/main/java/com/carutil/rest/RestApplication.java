@@ -1,4 +1,4 @@
-package com.imcamper.rest;
+package com.carutil.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
