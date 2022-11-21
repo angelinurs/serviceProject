@@ -87,10 +87,19 @@
 
 ---
 ##### # 3. Database 및 table scheme 구성
-> __1. database__
+
+> __0. database__
 >> - carutil
 ```sql
 CREATE DATABASE `carutil`;
+```
+
+> __1. user__
+>> - naru
+```sql
+CREATE USER naru IDENTIFIED BY '3013';
+GRANT ALL PRIVILEGES ON `carutil` TO 'naru'@'%';
+FLUSH PRIVILEGES;
 ```
 
 > __2. 회원정보 table__
@@ -114,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `carutil`.`member` (
     `grade` INT DEFAULT 0, -- 회원 등급 ( 관리자 9 )
     `regDate`date NOT NULL, -- 가입 날짜 ( 이전에 없던 필드 )
     
-    constraint Pk_Member primary key( no )
+    constraint Pk_Member primary key( m_idx )
 );
 ```
 > __3. 게시판 table__
@@ -124,13 +133,13 @@ CREATE TABLE IF NOT EXISTS `carutil`.`member` (
 DROP TABLE `carutil`.`bbs`;
 CREATE TABLE `carutil`.`bbs` (
   `b_idx` INT NOT NULL AUTO_INCREMENT,
-  `subject` VARCHAR(50) DEFAULT NOT NULL,
-  `writer` VARCHAR(20) DEFAULT NOT NULL,
+  `subject` VARCHAR(50) NOT NULL,
+  `writer` VARCHAR(20) NOT NULL,
   `content` text,
-  `file_name` VARCHAR(50) DEFAULT NULL,
-  `ori_name` VARCHAR(50) DEFAULT NULL,
-  `write_date` date DEFAULT NOT NULL,
-  `ip` VARCHAR(30) DEFAULT NOT NULL,
+  `file_name` VARCHAR(50) NULL,
+  `ori_name` VARCHAR(50) NULL,
+  `write_date` date NOT NULL,
+  `ip` VARCHAR(30) NOT NULL,
   `hit` INT DEFAULT 0, -- 게시물 조회수
   `bname` VARCHAR(10) DEFAULT 'BBS',
   `like` INT DEFAULT 0, -- 게시물 좋아요 기능
@@ -146,11 +155,11 @@ CREATE TABLE `carutil`.`bbs` (
 DROP TABLE `carutil`.`comment`;
 CREATE TABLE `carutil`.`comment` (
   `c_idx` INT NOT NULL AUTO_INCREMENT,
-  `writer` VARCHAR(20) DEFAULT NULL,
+  `writer` VARCHAR(20) NULL,
   `content` text,
-  `write_date` date DEFAULT NULL,
-  `ip` VARCHAR(30) DEFAULT NULL,
-  `b_idx` INT DEFAULT NULL, -- foreign key default null 이 맞음.
+  `write_date` date NULL,
+  `ip` VARCHAR(30) NULL,
+  `b_idx` INT NULL, -- foreign key NULL 이 맞음.
   `like` INT DEFAULT 0, -- 댓글 좋아요 기능
   `status` INT DEFAULT 0,  -- 댓글 삭제 여부 ( 기존에 없던 필드, !!회의때 검토 )
 
