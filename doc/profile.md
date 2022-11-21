@@ -95,8 +95,8 @@
 >> - no ( 회원번호 ), id, pw, email, birth, phone, snsAuth( 소셜 로그인 ), snsID( 소셜 로그인 아이디 ), manner_point, activate( 활동/탈퇴 여부 ), grade( 등급 ), regDate( 가입 날짜 )
 >> - activate 와 grade 를 통합할건지?
 ```sql
-DROP TABLE `imcamper`.`member`;
-CREATE TABLE IF NOT EXISTS `imcamper`.`member` (
+DROP TABLE `carutil`.`member`;
+CREATE TABLE IF NOT EXISTS `carutil`.`member` (
     `m_idx` INT NOT NULL AUTO_INCREMENT, -- primary key
     `id` VARCHAR(256) NOT NULL,
     `pw` VARCHAR(256) NOT NULL,
@@ -118,8 +118,8 @@ CREATE TABLE IF NOT EXISTS `imcamper`.`member` (
 >> - **bbs**
 >> - b_idx, subject, writer, content, file_name, ori_name, write_date, ip, hit, status, bname, like
 ```sql
-DROP TABLE `imcamper`.`bbs`;
-CREATE TABLE `imcamper`.`bbs` (
+DROP TABLE `carutil`.`bbs`;
+CREATE TABLE `carutil`.`bbs` (
   `b_idx` INT NOT NULL AUTO_INCREMENT,
   `subject` VARCHAR(50) DEFAULT NOT NULL,
   `writer` VARCHAR(20) DEFAULT NOT NULL,
@@ -140,8 +140,8 @@ CREATE TABLE `imcamper`.`bbs` (
 >> - **comment**
 >> - c_idx, writer, content, write_date, ip, b_idx, like, status
 ```sql
-DROP TABLE `imcamper`.`comment`;
-CREATE TABLE `imcamper`.`comment` (
+DROP TABLE `carutil`.`comment`;
+CREATE TABLE `carutil`.`comment` (
   `c_idx` INT NOT NULL AUTO_INCREMENT,
   `writer` VARCHAR(20) DEFAULT NULL,
   `content` text,
