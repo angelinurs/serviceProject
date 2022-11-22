@@ -118,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `carutil`.`member` (
     `pw` VARCHAR(256) NOT NULL,
     `email` VARCHAR(256) NOT NULL,
     `name` VARCHAR(256) NOT NULL,
+    `nick` VARCHAR(256) NOT NULL, -- nick name
     `birth` date NOT NULL,
     `phone` VARCHAR(256) NOT NULL,
     `snsAuth` VARCHAR(256) DEFAULT 'local', -- social login ex) google, naver
@@ -148,6 +149,7 @@ CREATE TABLE `carutil`.`bbs` (
   `bname` VARCHAR(10) DEFAULT 'BBS',
   `like` INT DEFAULT 0, -- 게시물 좋아요 기능
   `status` INT DEFAULT 0,  -- 게시물 삭제 여부
+  `etc` VARCHAR(50) NULL, -- 여분의 필드
 
   PRIMARY KEY (`b_idx`)
 );

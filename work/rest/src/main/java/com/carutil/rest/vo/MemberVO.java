@@ -15,6 +15,7 @@ public class MemberVO {
     private String pw;
     private String email;
     private String name;
+    private String nick;
     private String birth;
     private String phone;
     private String snsAuth;
