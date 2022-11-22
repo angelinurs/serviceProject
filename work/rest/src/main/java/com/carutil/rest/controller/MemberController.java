@@ -43,4 +43,27 @@ public class MemberController {
         return resMap;
     }
 
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public Map<String, String> signup(String id, String pw, String name, String nick, String birth, String phone,
+            String phone1, String phone2) {
+
+        Map<String, String> map = new HashMap<>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("id : ").append(id).append("\n")
+                .append("pw : ").append(pw).append("\n")
+                .append("name : ").append(name).append("\n")
+                .append("nick : ").append(nick).append("\n")
+                .append("birth : ").append(birth).append("\n")
+                .append("phone : ").append(phone).append("-")
+                .append(phone1).append("-")
+                .append(phone2).append("\n");
+
+        System.out.println(sb.toString());
+
+        map.put("succ", "1");
+
+        return map;
+    }
+
 }

@@ -24,7 +24,16 @@
 >> - `carutil/work$ npx create-next-app carutil`
 >> - ==사실 위의 명령어 하나로 next, react, react-dom 의존성을 검사하여 자동 설치한다.==
 > 8. 설치 완료 확인 명령어
->> `npm run dev`
+>> - `npm run dev`
+> 9. react-imask 설치 각종 문자열 서식 자동화 작업
+>> - `npm i react-imask`
+> 10. 달력 생성을 위한 Date picker 설치
+>> - // Install component (community version)
+>> - `npm install @mui/x-date-pickers`
+>> - // Install date library (if not already installed)
+>> - `npm install moment`
+>> - // dayjs
+>> - `npm i dayjs`
 
 #### # UI 작업 일정
 > == 상세 ==

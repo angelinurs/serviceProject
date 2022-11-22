@@ -139,7 +139,8 @@ DROP TABLE `carutil`.`bbs`;
 CREATE TABLE `carutil`.`bbs` (
   `b_idx` INT NOT NULL AUTO_INCREMENT,
   `subject` VARCHAR(50) NOT NULL,
-  `writer` VARCHAR(20) NOT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  'nick' VARCHAR(20) NOT NULL,
   `content` text,
   `file_name` VARCHAR(50) NULL,
   `ori_name` VARCHAR(50) NULL,
@@ -161,7 +162,8 @@ CREATE TABLE `carutil`.`bbs` (
 DROP TABLE `carutil`.`comment`;
 CREATE TABLE `carutil`.`comment` (
   `c_idx` INT NOT NULL AUTO_INCREMENT,
-  `writer` VARCHAR(20) NULL,
+  `id` VARCHAR(20) NOT NULL,
+  'nick' VARCHAR(20) NOT NULL,
   `content` text,
   `write_date` date NULL,
   `ip` VARCHAR(30) NULL,
