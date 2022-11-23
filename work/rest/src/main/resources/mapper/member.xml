@@ -10,7 +10,7 @@
     namespace 에 명시된 추상 method 들로 아래의 query 들이 지정된다.
    -->
 
-  <select id="login" resultType="com.carutil.rest.vo.MemVO" 
+  <select id="login" resultType="com.carutil.rest.vo.MemberVO" 
                      parameterType="java.util.Map" >
     SELECT * 
     FROM `carutil`.`member`

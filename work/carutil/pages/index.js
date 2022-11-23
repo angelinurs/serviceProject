@@ -23,7 +23,7 @@ export default function Home() {
         받은 자원들을 표현할 컴포넌트 호출
         
         */}
-        <span>main body contents</span>
+        {/* <span>main body contents</span> */}
         {/* <GetEmployeeListWithPaging elist={elist} /> */}
 
         <Signup />

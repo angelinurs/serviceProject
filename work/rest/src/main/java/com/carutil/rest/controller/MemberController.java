@@ -12,7 +12,6 @@ import com.carutil.rest.service.MemberService;
 import com.carutil.rest.vo.MemberVO;
 
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 // ui 를 활용할 nextjs 와의 충돌 설정
 @CrossOrigin(originPatterns = "http://localhost:3000 ")
@@ -43,9 +42,9 @@ public class MemberController {
         return resMap;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public Map<String, String> signup(String id, String pw, String name, String nick, String birth, String phone,
-            String phone1, String phone2) {
+    // @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping("/signup")
+    public Map<String, String> signup(String id, String pw, String name, String nick, String birth, String phone) {
 
         Map<String, String> map = new HashMap<>();
 
@@ -55,9 +54,7 @@ public class MemberController {
                 .append("name : ").append(name).append("\n")
                 .append("nick : ").append(nick).append("\n")
                 .append("birth : ").append(birth).append("\n")
-                .append("phone : ").append(phone).append("-")
-                .append(phone1).append("-")
-                .append(phone2).append("\n");
+                .append("phone : ").append(phone).append("\n");
 
         System.out.println(sb.toString());
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import axios from 'axios';
 
@@ -22,10 +22,17 @@ import { orange } from "@mui/material/colors"; // color pick
 // DateOcker ( calendar )
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"; // @mui/x-date-pickers 설치
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // dayjs 설치
+import dayjs from "dayjs";
 
 const API_URL = "/member/signup"
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.withCredentials = true;
 
-function Signup()   {
+const Signup = () =>   {
+    
+    useEffect(() => {
+        localStorage.clear();
+    });
 
     // Date-picker variable
     const [value, setValue] = useState( null );
@@ -37,34 +44,91 @@ function Signup()   {
         rpw: '',
         name: '',
         nick: '',
-        birth: '',
+        birth: null,
         phone: '',
         phone1: '',
         phone2: '',
-    });
+    });    
 
-    function changeParams(e) {
+    // password 같은 지 확인하는 variable
+    var pwChk = 0;
+
+    // axios cors 문제 header 설정
+    const header = {"Content-type":"application/json"};
+
+    const list = [];
+
+    function changeInfo(e) {
         setUserInfo({
             ...userInfo,
-            [e.target.name] : e.target.value
-        })
+            [e.target.id] : e.target.value,
+        });
+    };
+
+    function checkPassword(e) {
+        // var item = { [e.target.id] : e.target.value }; 
+
+        // useState 사용시 동기화 문제 해결 안됨.
+        // localStorage 사용함.
+        // 이후 submit 넘어갈때 관련 item 삭제 해주어야 함.
+        changeInfo(e);
+        localStorage.setItem( e.target.id, e.target.value );
+
+        var pw = localStorage.getItem( 'pw' );
+        var rpw = localStorage.getItem( 'rpw' );
+
+        console.log( 'pw : ' + pw );
+        console.log( 'rpw : ' + rpw );
+        
+        if( pw != null && rpw != null ) {
+
+            if( pw.length > 7 && rpw.length > 7 && pw == rpw ) {
+                pwChk = 1;
+                console.log( '일치합니다. password check : ' + pwChk );
+            } else {
+                pwChk = 0;
+            }
+
+        }
+
+        console.log( localStorage );
+        
     };
 
     function signup() {
+        // if( pwChk != 1 ) {}
+
         axios.post(
+            // 'http://localhost:8080/member/signup',
             API_URL,
             null,
             {
-                paramsSerializer
+                // params : userInfo
+                params : {
+                    id: userInfo.id,
+                    pw: userInfo.pw,
+                    name: userInfo.name,
+                    nick: userInfo.nick,
+                    birth: userInfo.birth,
+                    phone: userInfo.phone + '-' 
+                         + userInfo.phone1 + '-' 
+                         + userInfo.phone2,
+                },
+                headers: {"Access-Control-Allow-Origin": "*"},
+                withCredentials: true,            
+                // headers: {"Content-type":"application/json"},
             }
-        );
-    }
+        ).then( res => {
+            console.log( res.data );
+        });
+    };
 
     return (
         <div className="Signin">
             <FormControl  justifycontent="center">
                 <Stack spacing={2}>
                     <Box >
+                    
                         {/* <Button color="secondary" fullWidth sx={{ display: 'flex', alignItems: 'flex-end' }} disableTouchRipple> */}
                             <Typography
                                 variant="h5"
@@ -86,9 +150,9 @@ function Signup()   {
                     {/* 
                         User ID
                     */}
-                    <Box>
+                    <Box>                                                            
                         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="id" label='User ID' variant="standard" />
+                        <TextField id="id" label='User ID' variant="standard" onChange={changeInfo} />
                     </Box>
                     {/* 
                         User Password 
@@ -101,6 +165,8 @@ function Signup()   {
                             type="password"
                             autoComplete="current-password"
                             variant="standard"
+                            onChange={checkPassword}
+                            helperText="at least 8 characters"
                         />
                     </Box>                
                     {/* 
@@ -114,6 +180,9 @@ function Signup()   {
                             type="password"
                             autoComplete="current-password"
                             variant="standard"
+                            onChange={checkPassword}
+                            helperText="at least 8 characters"
+                            color="warning"
                         />
                     </Box>                
                     {/* 
@@ -121,14 +190,14 @@ function Signup()   {
                     */}
                     <Box>
                         <PersonPinTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="nick" label='Name' variant="standard" />
+                        <TextField id="name" label='Name' variant="standard" onChange={changeInfo} />
                     </Box>
                     {/* 
                         User Nickname
                     */}
                     <Box>
                         <SwitchAccountTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="nick" label='Nick Name' variant="standard" />
+                        <TextField id="nick" label='Nick Name' variant="standard" onChange={changeInfo} />                
                     </Box>
                     {/* 
                         User Birth
@@ -138,11 +207,18 @@ function Signup()   {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 value={value}
-                                
-                                onChange={(newValue) => {
-                                setValue(newValue);
+                                // onChange={(newValue) => {
+                                //     setValue(newValue);
+                                // }}                                
+                                onChange={(newValue) =>{
+                                    setValue(newValue);
+                                    setUserInfo({
+                                        ...userInfo,
+                                        ['birth'] : dayjs(newValue).format('DD-MM-YYYY') ,
+                                    });
+
                                 }}
-                                renderInput={(params) => <TextField {...params} id='birth' label="Birth day" variant="standard" sx={{width:200}}/>}
+                                renderInput={(params) => <TextField {...params} id='birth' label="Birth day" variant="standard" sx={{width:200}} />}
                             />
                         </LocalizationProvider>
                     </Box>
@@ -151,18 +227,20 @@ function Signup()   {
                     */}
                     <Box>
                         <PhoneIphoneTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="phone" variant="standard" sx={{width : 50 }} inputProps={{min: 0, style: { textAlign: 'center' }}}  placeholder='000' />
+                        <TextField id="phone" variant="standard" sx={{width : 50 }} inputProps={{min: 0, style: { textAlign: 'center' }} }  placeholder='000'  onChange={changeInfo}/>
                         {' - '}
-                        <TextField id="phone1" variant="standard" sx={{width : 60 }} inputProps={{min: 0, style: { textAlign: 'center' }}} placeholder='0000' />
+                        <TextField id="phone1" variant="standard" sx={{width : 60 }} inputProps={{min: 0, style: { textAlign: 'center' }}} placeholder='0000'  onChange={changeInfo}/>
                         {' - '}
-                        <TextField id="phone2" variant="standard" sx={{width : 60 }} inputProps={{min: 0, style: { textAlign: 'center' }}} placeholder='0000' />
+                        <TextField id="phone2" variant="standard" sx={{width : 60 }} inputProps={{min: 0, style: { textAlign: 'center' }}} placeholder='0000' onChange={changeInfo} />
                     </Box>
                     {/* 
                         Summit Button
                      */}
                     <Box justifycontent="center">
                         <Button variant="contained" endIcon={<SendIcon />} 
-                                sx={{ display: 'flex', alignItems: 'flex-end', ml: 2, width: 200 }}>
+                                sx={{ display: 'flex', alignItems: 'flex-end', ml: 2, width: 200 }}
+                                onClick={signup}
+                                >
                             Submit
                         </Button>
                     </Box>

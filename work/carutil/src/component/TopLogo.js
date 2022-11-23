@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 
-function TopLogo()  {
+const TopLogo = () =>  {
     return (
         <div className="TopLogo">
             <Stack direction="row" justifyContent="center">
