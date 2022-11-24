@@ -95,14 +95,18 @@
 > __0. database__
 >> - carutil
 ```sql
+DROP DATABASE `carutil`;
+
 CREATE DATABASE `carutil`;
 ```
 
 > __1. user__
 >> - naru
 ```sql
+DROP USER `naru`@'%';
+
 CREATE USER naru IDENTIFIED BY '3013';
-GRANT ALL PRIVILEGES ON `carutil` TO 'naru'@'%';
+GRANT ALL PRIVILEGES ON `carutil`.* TO 'naru'@'%';
 FLUSH PRIVILEGES;
 ```
 
@@ -126,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `carutil`.`member` (
     `manner_point` INT DEFAULT 0,
     `activate` INT DEFAULT 0, -- 유효 회원( 활동/탈퇴 여부 )
     `grade` INT DEFAULT 0, -- 회원 등급 ( 관리자 9 )
-    `regDate`date NOT NULL, -- 가입 날짜 ( 이전에 없던 필드 )
+    `regDate` datetime NOT NULL, -- 가입 날짜 ( 이전에 없던 필드 )
     
     constraint Pk_Member primary key( m_idx )
 );
@@ -144,7 +148,7 @@ CREATE TABLE `carutil`.`bbs` (
   `content` text,
   `file_name` VARCHAR(50) NULL,
   `ori_name` VARCHAR(50) NULL,
-  `write_date` date NOT NULL,
+  `write_date` datetime NOT NULL,
   `ip` VARCHAR(30) NOT NULL,
   `hit` INT DEFAULT 0, -- 게시물 조회수
   `bname` VARCHAR(10) DEFAULT 'BBS',
@@ -165,7 +169,7 @@ CREATE TABLE `carutil`.`comment` (
   `id` VARCHAR(20) NOT NULL,
   'nick' VARCHAR(20) NOT NULL,
   `content` text,
-  `write_date` date NULL,
+  `write_date` datetime NULL,
   `ip` VARCHAR(30) NULL,
   `b_idx` INT NULL, -- foreign key NULL 이 맞음.
   `like` INT DEFAULT 0, -- 댓글 좋아요 기능

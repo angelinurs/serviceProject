@@ -11,4 +11,6 @@ public interface MemberMapper {
 
     MemberVO login(@Param("id") String id,
             @Param("pw") String pw);
+
+    int signup(MemberVO vo);
 }

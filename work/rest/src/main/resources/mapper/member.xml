@@ -17,4 +17,9 @@
     WHERE m_id = #{m_id} AND m_pw = #{m_pw}
   </select>
 
+  <insert id="signup" parameterType="com.carutil.rest.vo.MemberVO">
+    INSERT INTO `carutil`.`member` ( `id`, `pw`, `email`, `name`, `nick`, `birth`, `phone`,  `regDate` )
+    VALUES ( #{id}, #{pw}, #{email}, #{name}, #{nick}, #{birth}, #{phone}, #{regDate} )
+  </insert>
+
 </mapper>

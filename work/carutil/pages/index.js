@@ -5,6 +5,7 @@ import TopLogo from '../src/component/TopLogo'
 import TopMenuBar from '../src/component/TopMenuBar'
 import Footer from '../src/component/Footer'
 import styles from '../styles/Home.module.css'
+import Modal_Congratuation from '../src/component/Modal_Congratuation'
 
 export default function Home() {
   return (
@@ -22,10 +23,11 @@ export default function Home() {
         Spring boot server 의 경로를 호출하여
         받은 자원들을 표현할 컴포넌트 호출
         
-        */}
+      */}
         {/* <span>main body contents</span> */}
         {/* <GetEmployeeListWithPaging elist={elist} /> */}
 
+        {/* <Modal_Congratuation /> */}
         <Signup />
         
       </main>

@@ -18,4 +18,9 @@ public class MemberService {
 
         return mapper.login(id, pw);
     }
+
+    public int signup(MemberVO vo) {
+
+        return mapper.signup(vo);
+    }
 }

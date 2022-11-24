@@ -12,6 +12,7 @@ import LockClockTwoToneIcon from '@mui/icons-material/LockClockTwoTone'; // re p
 import PersonPinTwoToneIcon from '@mui/icons-material/PersonPinTwoTone'; // name icon
 import SwitchAccountTwoToneIcon from '@mui/icons-material/SwitchAccountTwoTone'; // nick name icon
 import CakeTwoToneIcon from '@mui/icons-material/CakeTwoTone'; // birth day icon
+import EmailIcon from '@mui/icons-material/Email'; // email icon
 import PhoneIphoneTwoToneIcon from '@mui/icons-material/PhoneIphoneTwoTone'; // phone icon
 
 import SendIcon from '@mui/icons-material/Send'; // send icon
@@ -24,9 +25,9 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"; // @mui/
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // dayjs 설치
 import dayjs from "dayjs";
 
-const API_URL = "/member/signup"
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-axios.defaults.withCredentials = true;
+const API_URL = "/rest/member/signup"
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+// axios.defaults.withCredentials = true;
 
 const Signup = () =>   {
     
@@ -48,15 +49,29 @@ const Signup = () =>   {
         phone: '',
         phone1: '',
         phone2: '',
+        regDate: '',
+        email : ''
     });    
 
-    // password 같은 지 확인하는 variable
-    var pwChk = 0;
+    // check infomation
+    const [chkInfo, setChkInfo] = useState({
+        id: 0,
+        pw: 0,
+        rpw: 0,
+        name: 0,
+        nick: 0,
+        birth: 0,
+        phone: 0,
+        phone1: 0,
+        phone2: 0,
+        regDate: 0,
+        email : 0
+    });
 
     // axios cors 문제 header 설정
     const header = {"Content-type":"application/json"};
 
-    const list = [];
+    var pwChk = 0;
 
     function changeInfo(e) {
         setUserInfo({
@@ -96,10 +111,28 @@ const Signup = () =>   {
     };
 
     function signup() {
-        // if( pwChk != 1 ) {}
 
-        axios.post(
-            // 'http://localhost:8080/member/signup',
+        // 추후 처리할 check 항목들
+
+        // if( chkInfo.id != 1 ) { console.log( "pw : " + chkInfo.id );  }
+        // if( chkInfo.pw != 1 ) { console.log( "pw : " + chkInfo.pw );  }
+        // if( chkInfo.rpw != 1 ) { console.log( "pw : " + chkInfo.rpw );  }
+        // if( chkInfo.name != 1 ) { console.log( "pw : " + chkInfo.name );  }
+        // if( chkInfo.nick != 1 ) { console.log( "pw : " + chkInfo.nick );  }
+        // if( chkInfo.birth != 1 ) { console.log( "pw : " + chkInfo.birth );  }
+        // if( chkInfo.phone != 1 ) { console.log( "phone : " + chkInfo.phone );  }
+        // if( chkInfo.phone1 != 1 ) { console.log( "phone1 : " + chkInfo.phone1 );  }
+        // if( chkInfo.phone2 != 1 ) { console.log( "phone2 : " + chkInfo.phone2 );  }
+        // if( chkInfo.regDate != 1 ) { console.log( "pw : " + chkInfo.regDate );  }
+        // if( chkInfo.email != 1 ) { console.log( "pw : " + chkInfo.email );  }
+
+        // if( pwChk != 1 ) { console.log( "password 일치 안함 : " + pwChk );  }
+
+        var now = dayjs();
+
+        setUserInfo({ regDate : now.format('YYYY-MM-DD HH:mm:ss') });
+
+        axios.post(            
             API_URL,
             null,
             {
@@ -110,9 +143,11 @@ const Signup = () =>   {
                     name: userInfo.name,
                     nick: userInfo.nick,
                     birth: userInfo.birth,
+                    email: userInfo.email,
                     phone: userInfo.phone + '-' 
                          + userInfo.phone1 + '-' 
                          + userInfo.phone2,
+                    regDate: now.format('YYYY-MM-DD HH:mm:ss')
                 },
                 headers: {"Access-Control-Allow-Origin": "*"},
                 withCredentials: true,            
@@ -152,7 +187,7 @@ const Signup = () =>   {
                     */}
                     <Box>                                                            
                         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="id" label='User ID' variant="standard" onChange={changeInfo} />
+                        <TextField id="id" label='User ID *' variant="standard" onChange={changeInfo} />
                     </Box>
                     {/* 
                         User Password 
@@ -214,13 +249,20 @@ const Signup = () =>   {
                                     setValue(newValue);
                                     setUserInfo({
                                         ...userInfo,
-                                        ['birth'] : dayjs(newValue).format('DD-MM-YYYY') ,
+                                        ['birth'] : dayjs(newValue).format('YYYY-MM-DD') ,
                                     });
 
                                 }}
                                 renderInput={(params) => <TextField {...params} id='birth' label="Birth day" variant="standard" sx={{width:200}} />}
                             />
                         </LocalizationProvider>
+                    </Box>
+                    {/* 
+                        User Email
+                    */}
+                    <Box>
+                        <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                        <TextField id="email" label='E-mail' variant="standard" onChange={changeInfo} />                
                     </Box>
                     {/* 
                         User Phone

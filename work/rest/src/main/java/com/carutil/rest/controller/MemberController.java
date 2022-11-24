@@ -14,9 +14,9 @@ import com.carutil.rest.vo.MemberVO;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 // ui 를 활용할 nextjs 와의 충돌 설정
-@CrossOrigin(originPatterns = "http://localhost:3000 ")
+@CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/rest/member")
 public class MemberController {
 
     @Autowired
@@ -44,21 +44,35 @@ public class MemberController {
 
     // @RequestMapping(value = "/signup", method = RequestMethod.POST)
     @RequestMapping("/signup")
-    public Map<String, String> signup(String id, String pw, String name, String nick, String birth, String phone) {
+    public Map<String, String> signup(String id, String pw, String email, String name, String nick, String birth,
+            String phone, String regDate) {
 
-        Map<String, String> map = new HashMap<>();
-
+        // request parameter check code
         StringBuilder sb = new StringBuilder();
         sb.append("id : ").append(id).append("\n")
                 .append("pw : ").append(pw).append("\n")
                 .append("name : ").append(name).append("\n")
                 .append("nick : ").append(nick).append("\n")
                 .append("birth : ").append(birth).append("\n")
+                .append("email : ").append(email).append("\n")
                 .append("phone : ").append(phone).append("\n");
 
         System.out.println(sb.toString());
 
-        map.put("succ", "1");
+        // insert 준비
+        MemberVO vo = new MemberVO(null, id, pw, email, name, nick, birth, phone,
+                null, null, null, null, null, regDate);
+
+        int succ = m_service.signup(vo);
+
+        // respoonse signup result
+        Map<String, String> map = new HashMap<>();
+
+        if (succ != 0) {
+            map.put("succ", "1");
+        } else {
+            map.put("fail", "0");
+        }
 
         return map;
     }
