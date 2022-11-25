@@ -14,7 +14,7 @@
                      parameterType="java.util.Map" >
     SELECT * 
     FROM `carutil`.`member`
-    WHERE m_id = #{m_id} AND m_pw = #{m_pw}
+    WHERE id = #{id} AND pw = #{pw}
   </select>
 
   <insert id="signup" parameterType="com.carutil.rest.vo.MemberVO">

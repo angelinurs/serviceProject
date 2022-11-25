@@ -187,7 +187,7 @@ const Signup = () =>   {
                     */}
                     <Box>                                                            
                         <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="id" label='User ID *' variant="standard" onChange={changeInfo} />
+                        <TextField id="id" label='User ID' required variant="standard" onChange={changeInfo} />
                     </Box>
                     {/* 
                         User Password 
@@ -198,6 +198,7 @@ const Signup = () =>   {
                             id="pw"
                             label="Password"
                             type="password"
+                            required
                             autoComplete="current-password"
                             variant="standard"
                             onChange={checkPassword}
@@ -213,6 +214,7 @@ const Signup = () =>   {
                             id="rpw"
                             label="re input Password"
                             type="password"
+                            required
                             autoComplete="current-password"
                             variant="standard"
                             onChange={checkPassword}
@@ -225,14 +227,14 @@ const Signup = () =>   {
                     */}
                     <Box>
                         <PersonPinTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="name" label='Name' variant="standard" onChange={changeInfo} />
+                        <TextField id="name" label='Name'  required variant="standard" onChange={changeInfo} />
                     </Box>
                     {/* 
                         User Nickname
                     */}
                     <Box>
                         <SwitchAccountTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="nick" label='Nick Name' variant="standard" onChange={changeInfo} />                
+                        <TextField id="nick" label='Nick Name' required variant="standard" onChange={changeInfo} />                
                     </Box>
                     {/* 
                         User Birth
@@ -240,7 +242,7 @@ const Signup = () =>   {
                     <Box>
                         <CakeTwoToneIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker
+                            <DatePicker                                
                                 value={value}
                                 // onChange={(newValue) => {
                                 //     setValue(newValue);
@@ -251,6 +253,7 @@ const Signup = () =>   {
                                         ...userInfo,
                                         ['birth'] : dayjs(newValue).format('YYYY-MM-DD') ,
                                     });
+                                
 
                                 }}
                                 renderInput={(params) => <TextField {...params} id='birth' label="Birth day" variant="standard" sx={{width:200}} />}
@@ -262,7 +265,7 @@ const Signup = () =>   {
                     */}
                     <Box>
                         <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                        <TextField id="email" label='E-mail' variant="standard" onChange={changeInfo} />                
+                        <TextField id="email" label='E-mail' required variant="standard" onChange={changeInfo} />                
                     </Box>
                     {/* 
                         User Phone

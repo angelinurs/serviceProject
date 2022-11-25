@@ -130,6 +130,7 @@ function TopMenuBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {/*                 
@@ -138,6 +139,15 @@ function TopMenuBar() {
                 <Avatar alt='최희준' sx={{ bgcolor: deepOrange[500] }}>최</Avatar>
               </IconButton>
             </Tooltip>
+
+            <Button color="inherit">
+              sign-Up
+            </Button>
+            {'/'}
+            <Button color="inherit">
+              Sign-In
+            </Button>
+
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"

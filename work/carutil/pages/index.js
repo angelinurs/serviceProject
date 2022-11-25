@@ -6,6 +6,7 @@ import TopMenuBar from '../src/component/TopMenuBar'
 import Footer from '../src/component/Footer'
 import styles from '../styles/Home.module.css'
 import Modal_Congratuation from '../src/component/Modal_Congratuation'
+import Signin from '../src/component/SignIn'
 
 export default function Home() {
   return (
@@ -28,7 +29,8 @@ export default function Home() {
         {/* <GetEmployeeListWithPaging elist={elist} /> */}
 
         {/* <Modal_Congratuation /> */}
-        <Signup />
+        {/* <Signup /> */}
+        <Signin />
         
       </main>
 
