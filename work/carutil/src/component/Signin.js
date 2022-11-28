@@ -13,14 +13,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 const theme = createTheme();
 
 const API_URL = '/rest/member/signin';
 
 const Signin = () => {
+
     const [parameters, setParameters] = React.useState( {} );
 
+    const router = useRouter();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -39,18 +43,30 @@ const Signin = () => {
             null,
             {
                 params : {
-                    id : parameters.id,
-                    pw : parameters.pw
+                    // id : parameters.id,
+                    // pw : parameters.pw
+                    id : data.get('email'),
+                    pw : data.get('password'),
                 },
                 withCredentials: true,
             }
         ).then( res => {
-            console.log( res.data.user['id'] );
+            // console.log( res.data );
+            data.delete('password');
+
+            if( res.data.chk == 1 ) {
+                setCookie( 'user', JSON.stringify( res.data.user ), { maxAge : 3600 } );
+                setCookie( 'chk', res.data.chk, { maxAge : 3600 } );
+                router.push( '/' );
+            } else {
+                router.push( '/signin');
+            }
+            
         });
 
-        console.log( '### --------- done' );
+        // console.log( '### --------- done' );
         
-    };
+    }
     
     return (
         <div className="Signin">

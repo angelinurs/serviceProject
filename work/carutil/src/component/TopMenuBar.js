@@ -14,6 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import LocalCarWashIcon from '@mui/icons-material/LocalCarWash';
 
 import { deepOrange, deepPurple } from '@mui/material/colors';
+import { useRouter } from 'next/router';
+import Signup from './Signup';
+import Head from 'next/head';
+import TopLogo from './TopLogo';
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -21,6 +25,10 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function TopMenuBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const router = useRouter();
+
+  console.log( 'top menu bar have user state : ' + user );
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,6 +44,14 @@ function TopMenuBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const toSignIn = (e) => (
+    router.push( './signin' )
+  );
+    
+  const toSingUp = (e) => (
+    router.push( './signup' )
+  );
 
   return (
     <AppBar position="static">
@@ -140,12 +156,12 @@ function TopMenuBar() {
               </IconButton>
             </Tooltip>
 
-            <Button color="inherit">
-              sign-Up
+            <Button color="inherit" onClick={toSignIn}>
+              sign-In
             </Button>
             {'/'}
-            <Button color="inherit">
-              Sign-In
+            <Button color="inherit" onClick={toSingUp}>
+              sign-Up
             </Button>
 
             <Menu

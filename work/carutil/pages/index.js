@@ -1,14 +1,33 @@
 import Head from 'next/head'
 import Signup from '../src/component/Signup'
 
-import TopLogo from '../src/component/TopLogo'
-import TopMenuBar from '../src/component/TopMenuBar'
-import Footer from '../src/component/Footer'
 import styles from '../styles/Home.module.css'
 import Modal_Congratuation from '../src/component/Modal_Congratuation'
-import Signin from '../src/component/SignIn'
+
+
+import { useEffect, useState } from 'react'
+import { getCookie } from 'cookies-next'
+import Signin from './Signin'
+
 
 export default function Home() {
+  const [chk, setChk] = useState(false);
+  const [user, setUser] = useState( {} );
+
+  useEffect( () =>{
+
+    if( getCookie('chk') == 1 ) {
+      const data = JSON.parse( getCookie( 'user' ) );
+      setUser( data );
+      setChk( true );
+    } else {
+      setChk( false );
+    }
+
+  },[]);
+
+  console.log( "chk = " + chk );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,8 +35,6 @@ export default function Home() {
         <meta name="description" content="nextjs interlock with spring-boot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <TopLogo />
-      <TopMenuBar />
 
       <main className={styles.main}>
         {/* 
@@ -29,12 +46,13 @@ export default function Home() {
         {/* <GetEmployeeListWithPaging elist={elist} /> */}
 
         {/* <Modal_Congratuation /> */}
-        {/* <Signup /> */}
-        <Signin />
+
+        <h6> main body </h6>
+
+
+        
         
       </main>
-
-      <Footer />
 
     </div>
   )
