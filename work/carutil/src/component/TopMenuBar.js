@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,20 +15,37 @@ import LocalCarWashIcon from '@mui/icons-material/LocalCarWash';
 
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import { useRouter } from 'next/router';
-import Signup from './Signup';
-import Head from 'next/head';
-import TopLogo from './TopLogo';
+import { SignpostOutlined } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import * as accountAction from '../../lib/store/module/account';
+import { Link } from '@mui/material';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
 
 function TopMenuBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const router = useRouter();
 
-  console.log( 'top menu bar have user state : ' + user );
+  console.log( 'router log : ' + router.asPath );
+  
+  const chk = useSelector( (account) => account.chk );
+  const user = useSelector( ( account) => account.user );
+      
+  // const user = useSelector( ( state ) => state.account.user );
+  // const chk = useSelector( ( state ) => state.account.chk );
+
+  console.log( 'top menu bar user value : ' );
+  console.log( chk );
+
+  const dispatch = useDispatch();
+
+  // checkout reducer 를 useCallBack 으로 함수 선언
+  const checkout = useCallback(() => {
+      dispatch( accountAction.checkout());
+  }, [dispatch] );
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,16 +58,25 @@ function TopMenuBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (e) => {
+    
+    if( e.currentTarget.id == 'Signout' ) {
+      checkout();
+    }
+
     setAnchorElUser(null);
   };
 
-  const toSignIn = (e) => (
+  const toSignIn = () => (
     router.push( './signin' )
   );
     
-  const toSingUp = (e) => (
+  const toSingUp = () => (
     router.push( './signup' )
+  );
+  
+  const toHome = () => (
+    router.push( '/' )
   );
 
   return (
@@ -59,23 +85,28 @@ function TopMenuBar() {
         <Toolbar disableGutters>
             {/* 화면 축소 이전 */}
           <LocalCarWashIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Dashboard
-          </Typography>
+
+          <Link color="inherit" component="button" onClick={toHome} variant='h6' underline='none'>
+
+            <Typography
+              variant="h6"
+              noWrap
+              // component="a"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Dashboard
+            </Typography>
+
+          </Link>
+
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -115,6 +146,10 @@ function TopMenuBar() {
           </Box>
           {/* 화면 축소시 */}
           <LocalCarWashIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Button color="inherit" onClick={toHome}>
+            Dashboard
+          </Button>
+{/* 
           <Typography
             variant="h6"
             noWrap
@@ -133,6 +168,7 @@ function TopMenuBar() {
           >
             Dashboard
           </Typography>
+*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -146,23 +182,28 @@ function TopMenuBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            { chk && 
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {/*                 
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  */}
+                  <Avatar alt={user.id} sx={{ bgcolor: deepOrange[500] }}>{user.id.slice(0,2)}</Avatar>
+                </IconButton>
+              </Tooltip>
+            }
+            { !chk && 
+              <>
+                <Button color="inherit" onClick={toSignIn}>
+                  sign-In
+                </Button>
+                {' / '}
+                <Button color="inherit" onClick={toSingUp}>
+                  sign-Up
+                </Button>
+              </>
+            }
 
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/*                 
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                 */}
-                <Avatar alt='최희준' sx={{ bgcolor: deepOrange[500] }}>최</Avatar>
-              </IconButton>
-            </Tooltip>
-
-            <Button color="inherit" onClick={toSignIn}>
-              sign-In
-            </Button>
-            {'/'}
-            <Button color="inherit" onClick={toSingUp}>
-              sign-Up
-            </Button>
 
             <Menu
               sx={{ mt: '45px' }}
@@ -181,7 +222,7 @@ function TopMenuBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} id={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

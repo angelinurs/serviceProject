@@ -1,4 +1,4 @@
-import * as React from 'react';
+// ui logic import
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,31 +12,38 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+// business logic import
 import axios from 'axios';
-import { setCookie } from 'cookies-next';
+
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { useCallback } from 'react';
+import * as accountAction from '../../lib/store/module/account';
 
 const theme = createTheme();
 
 const API_URL = '/rest/member/signin';
 
 const Signin = () => {
-
-    const [parameters, setParameters] = React.useState( {} );
-
     const router = useRouter();
 
+    const dispatch = useDispatch();
+
+    // checkin reducer 를 useCallBack 으로 함수 선언
+    const checkin = useCallback((value) => {
+        dispatch( accountAction.checkin(value) );
+    }, [dispatch]);
+    
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const data = new FormData(event.currentTarget);
 
-        setParameters({
-            id: data.get('email'),
-            pw: data.get('password'),
-        });
-
-        console.log( parameters );
+        // setParameters({
+        //     id: data.get('email'),
+        //     pw: data.get('password'),
+        // });
 
         axios.post(
             API_URL,
@@ -55,13 +62,12 @@ const Signin = () => {
             data.delete('password');
 
             if( res.data.chk == 1 ) {
-                setCookie( 'user', JSON.stringify( res.data.user ), { maxAge : 3600 } );
-                setCookie( 'chk', res.data.chk, { maxAge : 3600 } );
+                checkin( res.data.user );
+                console.log(  res.data.user );
                 router.push( '/' );
             } else {
                 router.push( '/signin');
-            }
-            
+            }            
         });
 
         // console.log( '### --------- done' );
