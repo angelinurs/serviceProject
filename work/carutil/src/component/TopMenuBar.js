@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as accountAction from '../../lib/store/module/account';
 import { Link } from '@mui/material';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['Products', 'Pricing', 'Blog', '자유게시판'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Signout'];
 
 function TopMenuBar() {

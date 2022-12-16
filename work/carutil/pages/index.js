@@ -4,6 +4,8 @@ import Modal_Congratuation from '../src/component/Modal_Congratuation'
 import TopLogo from '../src/component/TopLogo'
 import TopMenuBar from '../src/component/TopMenuBar'
 import Footer from '../src/component/Footer'
+import Board from '../src/component/Board'
+import QuillBoard from '../src/component/QuillBoard'
 
 export default function Home() {
   return (
@@ -22,6 +24,8 @@ export default function Home() {
           {/* <Modal_Congratuation /> */}
 
           <h6> main body </h6>
+          {/* <Board /> */}
+          <QuillBoard />
           
         </main>
 
