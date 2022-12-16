@@ -7,10 +7,7 @@ import TopMenuBar from '../src/component/TopMenuBar';
 // import wrapper from '../lib/store/configStore';
 
 // persist 적용 후 ,
-import wrapper, { makeStore } from '../lib/persist-store/persistStore';
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistStore } from 'redux-persist';
-import { Provider, useDispatch, useSelector, useStore } from 'react-redux';
+import wrapper from '../lib/persist-store/persistStore';
 
 
 function MyApp({ Component, pageProps }) { 
