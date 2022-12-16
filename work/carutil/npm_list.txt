@@ -1,0 +1,39 @@
+carutil@0.1.0 C:\study\carutil\serviceProject\work\carutil
++-- @emotion/react@11.10.5
++-- @emotion/styled@11.10.5
++-- @mui/icons-material@5.10.15
++-- @mui/material@5.10.15
++-- @mui/x-date-pickers@5.0.9
++-- @redux-devtools/extension@3.2.3
++-- @reduxjs/toolkit@1.9.0
++-- axios@1.2.0
++-- cookies-next@2.1.1
++-- dayjs@1.11.6
++-- eslint-config-next@13.0.4
++-- eslint@8.28.0
++-- moment@2.29.4
++-- next-redux-wrapper@8.0.0
++-- next@13.0.4
++-- react-dom@18.2.0
++-- react-imask@6.4.3
++-- react-redux@8.0.5
++-- react-router-dom@6.4.3
++-- react@18.2.0
++-- redux-logger@3.0.6
++-- redux-persist@6.0.0
++-- redux-thunk@2.4.2
+`-- redux@4.2.0
+
+
+
+npm i @emotion/react @emotion/styled @mui/material @mui/x-date-pickers dayjs moment
+
+npm i axios
+
+npm i react-dom react-router-dom
+
+npm i redux react-redux next-redux-wrapper @reduxjs/toolkit 
+
+npm i @redux-devtools/extension redux-logger redux-thunk
+
+npm i redux-persist

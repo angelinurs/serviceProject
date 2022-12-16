@@ -8,20 +8,29 @@ const initialState = { user: {}, chk : false };
 const accountSlice = createSlice({
     name: 'account',
     initialState,
+    // reducers: {
+    //     checkin(state, action ) {            
+    //         state.user = action.payload;
+    //         state.chk = true;
+    //      },
+    //     checkout( state ) { 
+    //         state.user = {};
+    //         state.chk = false;
+    //     }
+    // },
     reducers: {
-        checkin(state, action ) {            
+        checkin: (state, action ) => {            
             state.user = action.payload;
             state.chk = true;
          },
-        checkout( state ) { 
+        checkout: ( state ) => { 
             state.user = {};
             state.chk = false;
         }
-    }
+    },
 })
 
 
 export const { checkin, checkout } = accountSlice.actions
 
-const reducer = accountSlice.reducer
-export default reducer
+export default accountSlice.reducer

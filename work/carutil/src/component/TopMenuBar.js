@@ -29,23 +29,29 @@ function TopMenuBar() {
 
   const router = useRouter();
 
-  console.log( 'router log : ' + router.asPath );
-  
-  const chk = useSelector( (account) => account.chk );
-  const user = useSelector( ( account) => account.user );
-      
-  // const user = useSelector( ( state ) => state.account.user );
-  // const chk = useSelector( ( state ) => state.account.chk );
+  // Case 01.
+  // const chk = useSelector( ({account}) => account.chk );
+  // const user = useSelector( ({account}) => account.user );
+
+  // Case 02.
+  // const user = useSelector((state)=>state.account.user);
+  // const chk = useSelector((state)=>state.account.chk);  
+
+  // Case 03.
+  const {chk, user} = useSelector( state => ({
+    chk: state.account.chk,
+    user: state.account.user
+  }));
 
   console.log( 'top menu bar user value : ' );
-  console.log( chk );
+  console.log( user.name );
 
   const dispatch = useDispatch();
 
   // checkout reducer 를 useCallBack 으로 함수 선언
-  const checkout = useCallback(() => {
-      dispatch( accountAction.checkout());
-  }, [dispatch] );
+  const checkout = useCallback(() =>
+    dispatch( accountAction.checkout()),[dispatch]
+    );
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

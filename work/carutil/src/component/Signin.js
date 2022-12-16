@@ -31,19 +31,18 @@ const Signin = () => {
     const dispatch = useDispatch();
 
     // checkin reducer 를 useCallBack 으로 함수 선언
-    const checkin = useCallback((value) => {
+    // const checkin = useCallback((value) => {
+    //     dispatch( accountAction.checkin(value) );
+    // }, [dispatch]);
+    const checkin = (value) =>
         dispatch( accountAction.checkin(value) );
-    }, [dispatch]);
     
     const handleSubmit = (event) => {
         event.preventDefault();
 
         const data = new FormData(event.currentTarget);
 
-        // setParameters({
-        //     id: data.get('email'),
-        //     pw: data.get('password'),
-        // });
+        // console.log( data.get('email'));
 
         axios.post(
             API_URL,
@@ -63,15 +62,12 @@ const Signin = () => {
 
             if( res.data.chk == 1 ) {
                 checkin( res.data.user );
-                console.log(  res.data.user );
+                
                 router.push( '/' );
             } else {
                 router.push( '/signin');
             }            
         });
-
-        // console.log( '### --------- done' );
-        
     }
     
     return (
