@@ -6,6 +6,7 @@ import TopMenuBar from '../src/component/TopMenuBar'
 import Footer from '../src/component/Footer'
 import Board from '../src/component/Board'
 import QuillBoard from '../src/component/QuillBoard'
+import WriteBBS from '../src/component/WriteBBS'
 
 export default function Home() {
   return (
@@ -25,7 +26,8 @@ export default function Home() {
 
           <h6> main body </h6>
           {/* <Board /> */}
-          <QuillBoard />
+          {/* <QuillBoard /> */}
+          <WriteBBS section={'자유게시판'}/>
           
         </main>
 

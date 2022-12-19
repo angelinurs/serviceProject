@@ -2,6 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  
+  // extra Image link allow
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fakeimg.pl',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 
   async rewrites() {
     return [
