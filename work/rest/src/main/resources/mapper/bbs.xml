@@ -11,8 +11,8 @@
    -->  
 
   <insert id="write" parameterType="com.carutil.rest.vo.BBsVO">
-    INSERT INTO `carutil`.`bbs` ( `subject`, `id`, `nick`, `content`, `file_name`, `ori_name`, `write_date`, `ip`, `bname`, `etc` )
-    VALUES ( #{subject}, #{id}, #{nick}, #{content}, #{file_name}, #{ori_name}, #{write_date}, #{ip}, #{bname}, #{etc} )
+    INSERT INTO `carutil`.`bbs` ( `subject`, `id`, `nick`, `content`, `file_name`, `ori_name`, `write_date`, `ip`, `bname` )
+    VALUES ( #{subject}, #{id}, #{nick}, #{content}, #{file_name}, #{ori_name}, #{write_date}, #{ip}, #{bname} )
   </insert>
 
 </mapper>

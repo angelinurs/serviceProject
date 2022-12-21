@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ import { Box, height } from "@mui/system";
 
 // icons
 import TitleIcon from '@mui/icons-material/Title'; // title icon
-import { AccountCircle, LineAxisOutlined } from "@mui/icons-material"; // id icon
+import { AccountCircle, ConstructionOutlined, LineAxisOutlined } from "@mui/icons-material"; // id icon
 
 import SendIcon from '@mui/icons-material/Send'; // send icon
 
@@ -16,24 +16,52 @@ import { orange } from "@mui/material/colors"; // color pick
 
 // DateOcker ( calendar )
 import dayjs from "dayjs";
-import QuillBoard from "./QuillBoard";
+import QuillBoard, { BoardContext } from "./QuillBoard";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import { useQuill } from "react-quilljs";
 
-const API_URL = "/rest/member/signup"
+const API_URL = "/rest/bbs/write";
 
 const WriteBBS = ( props ) =>   {
-    
+
+    // redux persist-store
     const {chk, user} = useSelector( state => ({
         chk: state.account.chk,
         user: state.account.user
     }));
 
-    const {post, setPost} = useState({
+    // writing post info
+    const [post, setPost] = useState({
         title : '',
         content : '',
-        date :''
+        date :'',
+        ip : ''
     });
+
+    // WYSIWYG editor Quill declare
+    const { quill, quillRef } = useQuill();
+
+    // user browser ip
+    // -- begin
+    const GetUserIP = async () => {
+        try {
+            // const res = await axios.get('https://ipapi.co/json/');
+            const res = await axios.get('http://www.geoplugin.net/json.gp');
+            const client = await res.data;
+            setPost({
+                ...post,
+                ip : client.ip,
+            });
+        } catch ( e ) {
+            console.error( error );
+        }
+    };
+    
+    // GetUserIP();
+
+    useEffect(()=>GetUserIP, []);
+    // end --
 
     function changeInfo(e) {
         setPost({
@@ -43,11 +71,15 @@ const WriteBBS = ( props ) =>   {
     };
 
     const doit = (e) => {
+        console.log( 'Do it !!');
         let now = dayjs();
         setPost({
             ...post,
-            date : now.format('YYYY-MM-DD HH:mm:ss'),
+            content : statement.content,
+            date : now.format('YYYY-MM-DD HH:mm:ss'),            
         });        
+        console.log( 'parent component check field : ', post.content );
+        // console.log( 'Do it !!');
     };
 
     /* *
@@ -100,6 +132,7 @@ const WriteBBS = ( props ) =>   {
                             }}
                             >
                                 {props.section}
+                                 {/* ${ post.ip} */}
                             </Typography>
                         {/* </Button> */}
                     </Box>
@@ -135,7 +168,10 @@ const WriteBBS = ( props ) =>   {
                         BBS : User name
                     */}
                     <Box>
-                        <QuillBoard />
+                        {/* <QuillBoard /> */}
+                        <div style={{ width: "600px", height: "300px" }}>
+                            <div ref={quillRef} />
+                        </div>
                     </Box>
                     <Box sx={{height: 40,}}>
                         <Hidden />
@@ -189,7 +225,8 @@ const WriteBBS = ( props ) =>   {
                                 sx={{ display: 'flex', alignItems: 'flex-end', ml: 2, width: 200 }}
                                 onClick={doit}
                                 >
-                            Done
+                            Done 
+                            {/* { post.date} */}
                         </Button>
                     </Box>
                 </Stack>                
