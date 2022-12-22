@@ -1,4 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import 'react-quill/dist/quill.snow.css'
+
+import { useCallback, useEffect, useState } from "react";
 
 import axios from 'axios';
 
@@ -16,10 +18,9 @@ import { orange } from "@mui/material/colors"; // color pick
 
 // DateOcker ( calendar )
 import dayjs from "dayjs";
-import QuillBoard, { BoardContext } from "./QuillBoard";
+import QuillBoard from "./QuillBoard";
 import { useSelector } from "react-redux";
 import Image from "next/image";
-import { useQuill } from "react-quilljs";
 
 const API_URL = "/rest/bbs/write";
 
@@ -37,29 +38,22 @@ const WriteBBS = ( props ) =>   {
         content : '',
         date :'',
         ip : ''
-    });
-
-    // WYSIWYG editor Quill declare
-    const { quill, quillRef } = useQuill();
+    });    
 
     // user browser ip
     // -- begin
     const GetUserIP = async () => {
-        try {
-            // const res = await axios.get('https://ipapi.co/json/');
-            const res = await axios.get('http://www.geoplugin.net/json.gp');
-            const client = await res.data;
-            setPost({
-                ...post,
-                ip : client.ip,
-            });
-        } catch ( e ) {
-            console.error( error );
-        }
+        // const res = await axios.get('https://ipapi.co/json/');
+        const res = await axios('http://www.geoplugin.net/json.gp');
+        const client = await res.data;
+
+        setPost({
+            ...post,
+            ip : client.geoplugin_request,
+        });
     };
     
-    // GetUserIP();
-
+    // empty array [], run when first rendering;
     useEffect(()=>GetUserIP, []);
     // end --
 
@@ -70,18 +64,24 @@ const WriteBBS = ( props ) =>   {
         });
     };
 
-    const doit = (e) => {
-        console.log( 'Do it !!');
-        let now = dayjs();
-        setPost({
-            ...post,
-            content : statement.content,
-            date : now.format('YYYY-MM-DD HH:mm:ss'),            
-        });        
-        console.log( 'parent component check field : ', post.content );
-        // console.log( 'Do it !!');
-    };
-
+    const doit = useCallback(
+        (e) => {
+            console.log( 'Do it !!');
+            let now = dayjs().format('YYYY-MM-DD HH:mm:ss');
+            let contents = sessionStorage.getItem( "content" );
+    
+            setPost({
+                ...post,
+                date : now,
+                content : contents,        
+            });
+    
+            console.log( 'parent component check field : ', post.ip );
+            console.log( 'parent component check field : ', post.date );
+            console.log( 'parent component check field : ', post.content );
+        }, [post]
+    );
+    
     /* *
     * Image upload
     * - begin
@@ -90,6 +90,7 @@ const WriteBBS = ( props ) =>   {
 
     const [createObjectURL, setCreateObjectURL ] = useState( null );
 
+    // select image preview
     const uploadToClient = ( e ) => {
         if( e.target.files && e.target.files[0] ) {
             const index = e.target.files[0];
@@ -168,10 +169,13 @@ const WriteBBS = ( props ) =>   {
                         BBS : User name
                     */}
                     <Box>
-                        {/* <QuillBoard /> */}
+                        <QuillBoard />
+{/* 
                         <div style={{ width: "600px", height: "300px" }}>
                             <div ref={quillRef} />
-                        </div>
+                        </div> 
+                        */}
+                        
                     </Box>
                     <Box sx={{height: 40,}}>
                         <Hidden />
@@ -195,11 +199,14 @@ const WriteBBS = ( props ) =>   {
                             ? <Image src={createObjectURL} 
                                     width={350}
                                     height={200}
+                                    alt="selected image"
                                 />
                             : <Image 
                                     src='https://fakeimg.pl/200x100/?retina=1&text=No Image&font=noto' 
                                     width={350}
                                     height={200}
+                                    alt="de-select image"
+                                    priority
                                 />
                             }
                         </Grid>
@@ -226,7 +233,6 @@ const WriteBBS = ( props ) =>   {
                                 onClick={doit}
                                 >
                             Done 
-                            {/* { post.date} */}
                         </Button>
                     </Box>
                 </Stack>                

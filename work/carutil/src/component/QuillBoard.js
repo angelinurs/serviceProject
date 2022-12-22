@@ -1,18 +1,14 @@
 import 'react-quill/dist/quill.snow.css'
 
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useQuill } from "react-quilljs";
 
-export const BoardContext = createContext( {} );
-
 export default function QuillBoard() {
-    const [ statement, setStatement ] = useState({
-        content:'',
-    });
     const { quill, quillRef } = useQuill();
 
-    console.log( '!' );
+    // console.log( 'quill object : ', quill );
+    // console.log( 'quill ref object : ', quillRef );
 
     useEffect( () => {
         console.log( '!!' );
@@ -26,18 +22,14 @@ export default function QuillBoard() {
                 // console.log(quill.getContents()); // Get delta contents
                 // console.log(quill.root.innerHTML); // Get innerHTML using quill
                 // console.log(quillRef.current.firstChild.innerHTML); // Get innerHTML using quillRef
-    
-                setStatement( quill.root.innerHTML );
-
+                sessionStorage.setItem( "content", quill.root.innerHTML );
               });
         }
-    } );
+    }, [ quill ]);
 
     return (
-        <BoardContext.Provider value={ {statement, setStatement} } >
             <div style={{ width: "600px", height: "300px" }}>
                 <div ref={quillRef} />
             </div>
-        </BoardContext.Provider>
     );
 }

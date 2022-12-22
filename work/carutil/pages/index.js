@@ -7,6 +7,7 @@ import Footer from '../src/component/Footer'
 import Board from '../src/component/Board'
 import QuillBoard from '../src/component/QuillBoard'
 import WriteBBS from '../src/component/WriteBBS'
+import QuillCustomImageUpload from '../src/component/QuillCustomAttachedImageUpload'
 
 export default function Home() {
   return (
@@ -25,9 +26,9 @@ export default function Home() {
           {/* <Modal_Congratuation /> */}
 
           <h6> main body </h6>
-          {/* <Board /> */}
           {/* <QuillBoard /> */}
-          <WriteBBS section={'자유게시판'}/>
+          {/* <WriteBBS section={'자유게시판'}/> */}
+          <QuillCustomImageUpload />
           
         </main>
 

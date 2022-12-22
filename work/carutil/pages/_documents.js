@@ -15,6 +15,7 @@ class MyDocument extends Document {
             <Head title='Dash board'>                
                 <meta charSet='utf-8' name="description" content="nextjs interlock with spring-boot" />
                 <link rel="icon" href="/favicon.ico" />
+                <link rel="dns-prefetch" href="https://fakeimg.pl" />
             </Head >
             <body>
 
