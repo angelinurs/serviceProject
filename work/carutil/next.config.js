@@ -21,6 +21,10 @@ const nextConfig = {
         destination: 'http://localhost:8080/rest/:path*',
         source: '/rest/:path*',
       },
+      {
+        destination: 'http://localhost:8080/images/:path*',
+        source: '/images/:path*',
+      },
     ];
   },
 }

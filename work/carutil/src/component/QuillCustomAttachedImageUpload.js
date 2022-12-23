@@ -11,6 +11,7 @@ const QuillCustomImageUpload = () => {
     const insertToEditor = (url) => {
         const range = quill.getSelection();
 
+        console.log( 'insertEmbed: ', url);
         quill.insertEmbed( range.index, 'image', url );
     };
 
@@ -20,7 +21,8 @@ const QuillCustomImageUpload = () => {
         body.append('s_file', file );
 
         const res = await fetch( SAVE_IMAGE_URL, { method: 'POST', body });
-        insertToEditor( res.uploadedImageUrl );
+        const data = await res.json();
+        insertToEditor( data.path+data.fname );
     }
 
     // Open Dialog to select Image File

@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "image.path.editor",
+  "type": "java.lang.String",
+  "description": "A description for 'image.path.editor'"
+}]}
